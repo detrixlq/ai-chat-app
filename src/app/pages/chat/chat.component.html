@@ -1,0 +1,31 @@
+<div class="chat-container">
+  <div class="header">
+    <h2>Chat with Bot</h2>
+  </div>
+
+  <div class="messages" #messagesContainer>
+    <div *ngFor="let message of messages" [ngClass]="message.sender">
+      <div class="message-meta">
+        <span class="sender">{{ message.sender === 'user' ? username : 'Bot' }}</span>
+        <span class="time">{{ message.timestamp | date:'shortTime' }}</span>
+      </div>
+      <div class="message-text">
+        {{ message.text }}
+      </div>
+    </div>
+
+    <div class="typing" *ngIf="isTyping">
+      <em>Bot is typing...</em>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <input
+      type="text"
+      [(ngModel)]="inputText"
+      (keyup.enter)="sendMessage()"
+      placeholder="Type your message..."
+    />
+    <button (click)="sendMessage()">Send</button>
+  </div>
+</div>
