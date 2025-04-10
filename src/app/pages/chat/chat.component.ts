@@ -8,6 +8,12 @@ interface Message {
   timestamp: Date;
 }
 
+interface Chat {
+  id: number;
+  name: string;
+  messages: Message[];
+}
+
 @Component({
   selector: 'app-chat',
   standalone: true,
@@ -17,35 +23,55 @@ interface Message {
 })
 export class ChatComponent implements AfterViewChecked {
   inputText = '';
-  messages: Message[] = [];
   username = localStorage.getItem('username') || 'You';
   isTyping = false;
+
+  sidebarClosed = false;
+
+  chats: Chat[] = [
+    { id: 1, name: 'Chat 1', messages: [] },
+    { id: 2, name: 'Chat 2', messages: [] },
+    { id: 3, name: 'New Chat', messages: [] }
+  ];
+
+  selectedChat: Chat = this.chats[0];
+
+  get messages(): Message[] {
+    return this.selectedChat.messages;
+  }
 
   sendMessage() {
     if (!this.inputText.trim()) return;
 
-    const userMessage = this.inputText.trim();
-
-    this.messages.push({
-      text: userMessage,
+    const userMessage: Message = {
+      text: this.inputText.trim(),
       sender: 'user',
       timestamp: new Date()
-    });
+    };
 
+    this.messages.push(userMessage);
     this.inputText = '';
     this.isTyping = true;
 
-    // Фейковый ответ от бота (заменим на реальный позже)
     setTimeout(() => {
       this.messages.push({
-        text: `Echo: ${userMessage}`,
+        text: `Echo: ${userMessage.text}`,
         sender: 'bot',
         timestamp: new Date()
       });
       this.isTyping = false;
     }, 1000);
   }
-  
+
+  toggleSidebar() {
+    this.sidebarClosed = !this.sidebarClosed;
+  }
+
+  selectChat(chat: Chat) {
+    this.selectedChat = chat;
+    this.sidebarClosed = true;
+  }
+
   ngAfterViewChecked() {
     const el = document.querySelector('.messages');
     if (el) {

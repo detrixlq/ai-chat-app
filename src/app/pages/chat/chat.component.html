@@ -1,31 +1,49 @@
-<div class="chat-container">
-  <div class="header">
-    <h2>Chat with Bot</h2>
+<div class="chat-wrapper">
+  <!-- Sidebar -->
+  <div class="sidebar" [class.closed]="sidebarClosed">
+    <div class="sidebar-header">
+      <h3>Chats</h3>
+      <button (click)="toggleSidebar()">✕</button>
+    </div>
+    <ul class="chat-list">
+      <li *ngFor="let chat of chats" (click)="selectChat(chat)">
+        {{ chat.name }}
+      </li>
+    </ul>
   </div>
 
-  <div class="messages" #messagesContainer>
-    <div *ngFor="let message of messages" [ngClass]="message.sender">
-      <div class="message-meta">
-        <span class="sender">{{ message.sender === 'user' ? username : 'Bot' }}</span>
-        <span class="time">{{ message.timestamp | date:'shortTime' }}</span>
+  <!-- Main Chat Window -->
+  <div class="chat-container">
+    <button class="burger-btn" *ngIf="sidebarClosed" (click)="toggleSidebar()">☰</button>
+
+    <div class="header">
+      <h2>Chat with Bot</h2>
+    </div>
+
+    <div class="messages" #messagesContainer>
+      <div *ngFor="let message of messages" [ngClass]="['message', message.sender]">
+        <div class="message-meta">
+          <span class="sender">{{ message.sender === 'user' ? username : 'Bot' }}</span>
+          <span class="time">{{ message.timestamp | date:'shortTime' }}</span>
+        </div>
+        <div class="message-text">
+          {{ message.text }}
+        </div>
       </div>
-      <div class="message-text">
-        {{ message.text }}
+
+      <div class="typing" *ngIf="isTyping">
+        <em>Bot is typing...</em>
       </div>
     </div>
 
-    <div class="typing" *ngIf="isTyping">
-      <em>Bot is typing...</em>
+    <div class="input-container">
+      <input
+        type="text"
+        [(ngModel)]="inputText"
+        (keyup.enter)="sendMessage()"
+        placeholder="Type your message..."
+      />
+      <button (click)="sendMessage()">Send</button>
     </div>
-  </div>
-
-  <div class="input-container">
-    <input
-      type="text"
-      [(ngModel)]="inputText"
-      (keyup.enter)="sendMessage()"
-      placeholder="Type your message..."
-    />
-    <button (click)="sendMessage()">Send</button>
   </div>
 </div>

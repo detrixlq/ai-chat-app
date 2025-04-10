@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -11,13 +11,13 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username: string = '';
+  username = '';
 
   constructor(private router: Router) {}
 
   login() {
     if (this.username.trim()) {
-      localStorage.setItem('username', this.username);
+      localStorage.setItem('username', this.username.trim());
       this.router.navigate(['/chat']);
     }
   }
