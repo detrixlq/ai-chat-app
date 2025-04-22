@@ -1,0 +1,165 @@
+.chat-wrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: #12121a;
+  color: #fff;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #1f1f2e;
+  padding: 20px;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+  position: absolute;
+  z-index: 10;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-header button {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+}
+
+.chat-list li {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.chat-list li:hover {
+  background-color: #444;
+}
+
+/* Chat Container */
+.chat-container {
+  flex: 1;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #1e1e2f;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  max-width: 800px;
+}
+
+/* Burger Button */
+.burger-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Messages */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  padding: 12px 16px;
+  border-radius: 12px;
+  max-width: 70%;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
+
+.message.user {
+  align-self: flex-end;
+  background-color: #4caf50;
+}
+
+.message.bot {
+  align-self: flex-start;
+  background-color: #3f51b5;
+}
+
+.message-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 4px;
+  opacity: 0.8;
+}
+
+.typing {
+  font-style: italic;
+  color: #aaa;
+}
+
+/* Input */
+.input-container {
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  background-color: #2c2c3c;
+  color: #fff;
+}
+
+input::placeholder {
+  color: #bbb;
+}
+
+button {
+  padding: 12px 24px;
+  border-radius: 10px;
+  background-color: #ff4081;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e91e63;
+}
