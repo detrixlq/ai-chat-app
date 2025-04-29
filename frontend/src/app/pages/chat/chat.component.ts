@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { MarkdownModule } from 'ngx-markdown'; // ✅ Импорт markdown
 
 interface Message {
   text: string;
@@ -19,7 +20,7 @@ interface Chat {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, MarkdownModule], // ✅ Добавлен MarkdownModule
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
@@ -64,7 +65,7 @@ export class ChatComponent implements AfterViewChecked {
     this.http.post<{ response: string }>(apiUrl, { prompt: userMessage.text }).subscribe({
       next: (response) => {
         this.messages.push({
-          text: response.response, // Ensure this matches your backend's response structure
+          text: response.response,
           sender: 'bot',
           timestamp: new Date()
         });

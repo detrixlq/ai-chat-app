@@ -57,17 +57,18 @@
 /* Chat Container */
 .chat-container {
   flex: 1;
-  margin: 40px auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 16px;
   background-color: #1e1e2f;
-  border-radius: 16px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   height: 80vh;
   color: #fff;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   position: relative;
-  max-width: 800px;
+  max-width: 1000px;
+  width: 90%;
 }
 
 /* Burger Button */
