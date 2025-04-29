@@ -25,12 +25,12 @@ export class LoginComponent {
     this.clearMessages();
     const trimmedUsername = this.username.trim();
     const trimmedPassword = this.password.trim();
-
+  
     if (!trimmedUsername || !trimmedPassword) {
       this.errorMessage = 'Username and password are required.';
       return;
     }
-
+  
     this.http.post('http://localhost:8000/login', {
       username: trimmedUsername,
       password: trimmedPassword
@@ -41,11 +41,15 @@ export class LoginComponent {
       })
     ).subscribe((response: any) => {
       if (response) {
+        // Save username for chat component to use
         localStorage.setItem('username', trimmedUsername);
         this.router.navigate(['/chat']);
+      } else {
+        this.errorMessage = 'Login failed. Please check your credentials.';
       }
     });
   }
+  
 
   register() {
     this.clearMessages();
