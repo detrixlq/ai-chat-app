@@ -6,12 +6,17 @@
       <button (click)="toggleSidebar()">✕</button>
     </div>
     <ul class="chat-list">
+      
       <li *ngFor="let chat of chats" (click)="selectChat(chat)">
         {{ chat.name }}
+        <button class="delete-button" (click)="deleteChat(chat, $event)">×</button>
       </li>
+      <button (click)="createNewChat()">New Chat</button>
+      
     </ul>
+    <button (click)="logout()" class="logout-button">Logout</button>
   </div>
-
+  
   <!-- Main Chat Window -->
   <div class="chat-container">
     <button class="burger-btn" *ngIf="sidebarClosed" (click)="toggleSidebar()">☰</button>
@@ -21,8 +26,10 @@
     </div>
 
     <div class="messages" #messagesContainer>
+      <!-- Display messages from the selected chat -->
       <div *ngFor="let message of messages" [ngClass]="['message', message.sender]">
         <div class="message-meta">
+          <!-- Dynamically show the sender as 'user' or 'Bot' -->
           <span class="sender">{{ message.sender === 'user' ? username : 'Bot' }}</span>
           <span class="time">{{ message.timestamp | date:'shortTime' }}</span>
         </div>
@@ -31,11 +38,13 @@
         </div>
       </div>
 
+      <!-- Show 'Bot is typing...' when the bot is generating a response -->
       <div class="typing" *ngIf="isTyping">
         <em>Bot is typing...</em>
       </div>
     </div>
 
+    <!-- Message input area -->
     <div class="input-container">
       <input
         type="text"
