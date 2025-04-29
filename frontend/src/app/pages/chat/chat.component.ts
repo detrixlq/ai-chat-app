@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Message {
   text: string;
@@ -29,7 +30,6 @@ export class ChatComponent implements AfterViewChecked, OnInit {
   inputText = '';
   username = 'You'; // Initialize with fallback
   isTyping = false;
-
   sidebarClosed = true;
   chats: Chat[] = [];
   selectedChat: Chat | null = null;
@@ -38,6 +38,7 @@ export class ChatComponent implements AfterViewChecked, OnInit {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -61,14 +62,19 @@ export class ChatComponent implements AfterViewChecked, OnInit {
       .subscribe({
         next: (response) => {
           this.chats = response;
+  
           if (this.chats.length > 0) {
             this.selectedChat = this.chats[0];
             this.fetchMessages(this.selectedChat.id);
+          } else {
+            // Automatically create a new chat if none exist
+            this.createNewChat();
           }
         },
         error: (err) => console.error('Failed to load chats:', err)
       });
   }
+  
 
   fetchMessages(chatId: number) {
     this.http.get<Message[]>(`http://127.0.0.1:8000/chats/${chatId}/messages`)
@@ -134,6 +140,7 @@ export class ChatComponent implements AfterViewChecked, OnInit {
         this.isTyping = false;
       }
     });
+    
   }
   
 
@@ -156,4 +163,24 @@ export class ChatComponent implements AfterViewChecked, OnInit {
       this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
     } catch (err) {}
   }
+
+  deleteChat(chat: Chat, event: Event) {
+    event.stopPropagation(); // Prevent selection when deleting
+  
+    this.http.delete(`http://127.0.0.1:8000/chats/${chat.id}`).subscribe({
+      next: () => {
+        this.chats = this.chats.filter(c => c.id !== chat.id);
+        if (this.selectedChat?.id === chat.id) {
+          this.selectedChat = this.chats.length > 0 ? this.chats[0] : null;
+        }
+      },
+      error: (err) => console.error('Failed to delete chat:', err)
+    });
+  }
+
+  logout() {
+    localStorage.removeItem('username');
+    this.router.navigate(['/login']);
+  }
+  
 }

@@ -81,3 +81,16 @@ def get_chat_messages(chat_id: int, db: Session = Depends(get_db)):
         {"text": m.text, "sender": m.sender, "timestamp": m.timestamp}
         for m in messages
     ]
+
+# DELETE /chats/{chat_id} – Delete a chat
+@router.delete("/chats/{chat_id}")
+def delete_chat(chat_id: int, db: Session = Depends(get_db)):
+    chat = db.query(Chat).filter(Chat.id == chat_id).first()
+    if not chat:
+        raise HTTPException(status_code=404, detail="Chat not found")
+
+    # Also delete its messages
+    db.query(Message).filter(Message.chat_id == chat_id).delete()
+    db.delete(chat)
+    db.commit()
+    return {"detail": "Chat deleted"}

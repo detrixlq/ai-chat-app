@@ -82,6 +82,7 @@
   left: 10px;
 }
 
+
 .header {
   text-align: center;
   margin-bottom: 25px;
@@ -162,4 +163,34 @@ button {
 
 button:hover {
   background-color: #e91e63;
+}
+
+
+.delete-button {
+  background: none;
+  border: none;
+  color: red;
+  font-weight: bold;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.chat-list:hover .delete-button {
+  visibility: visible;
+}
+
+.logout-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px;
+  margin: 8px;
+  cursor: pointer;
+  width: 180px;
+  position: absolute;
+  bottom: 0;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
 }

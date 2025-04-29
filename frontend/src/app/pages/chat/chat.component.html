@@ -9,11 +9,14 @@
       
       <li *ngFor="let chat of chats" (click)="selectChat(chat)">
         {{ chat.name }}
+        <button class="delete-button" (click)="deleteChat(chat, $event)">×</button>
       </li>
       <button (click)="createNewChat()">New Chat</button>
+      
     </ul>
+    <button (click)="logout()" class="logout-button">Logout</button>
   </div>
-
+  
   <!-- Main Chat Window -->
   <div class="chat-container">
     <button class="burger-btn" *ngIf="sidebarClosed" (click)="toggleSidebar()">☰</button>
