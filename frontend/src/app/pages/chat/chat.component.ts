@@ -25,7 +25,7 @@ interface Chat {
 })
 export class ChatComponent implements AfterViewChecked {
   inputText = '';
-  username = localStorage.getItem('username') || 'You';
+  username = localStorage.getItem('username') || 'You'; // Get username from localStorage
   isTyping = false;
 
   sidebarClosed = true;
@@ -55,15 +55,21 @@ export class ChatComponent implements AfterViewChecked {
       timestamp: new Date()
     };
 
-    this.messages.push(userMessage);
+    // Add user message to the selected chat's message list
+    this.selectedChat.messages.push(userMessage);
     this.inputText = '';
     this.isTyping = true;
 
     const apiUrl = `http://127.0.0.1:8000/chat`;
 
-    this.http.post<{ response: string }>(apiUrl, { prompt: userMessage.text }).subscribe({
+    // Send message to backend with both 'prompt' and 'username'
+    this.http.post<{ response: string }>(apiUrl, {
+      prompt: userMessage.text,
+      username: this.username // Send the username here
+    }).subscribe({
       next: (response) => {
-        this.messages.push({
+        // Add bot's response to the selected chat's message list
+        this.selectedChat.messages.push({
           text: response.response, // Ensure this matches your backend's response structure
           sender: 'bot',
           timestamp: new Date()
@@ -72,7 +78,8 @@ export class ChatComponent implements AfterViewChecked {
       },
       error: (error) => {
         console.error('Error:', error);
-        this.messages.push({
+        // Add error message if the backend fails
+        this.selectedChat.messages.push({
           text: 'Oops, something went wrong. Try again later.',
           sender: 'bot',
           timestamp: new Date()
