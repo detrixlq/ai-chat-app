@@ -57,17 +57,18 @@
 /* Chat Container */
 .chat-container {
   flex: 1;
-  margin: 40px auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 16px;
   background-color: #1e1e2f;
-  border-radius: 16px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   height: 80vh;
   color: #fff;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   position: relative;
-  max-width: 800px;
+  max-width: 900px;
+  width: 90%;
 }
 
 /* Burger Button */
@@ -193,4 +194,60 @@ button:hover {
 
 .logout-button:hover {
   background-color: #c0392b;
+}
+
+
+/*markdown css*/
+
+
+.message-text markdown table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  overflow-x: auto;
+  display: block; 
+}
+
+.message-text markdown th,
+.message-text markdown td {
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  text-align: left;
+  word-break: break-word;
+  max-width: 200px; 
+}
+
+.message-text markdown th {
+  background-color: #2a2a2a;
+  font-weight: bold;
+  color: #fff;
+}
+
+.message-text markdown {
+  overflow-x: auto;
+  display: block;
+  max-width: 100%;
+}
+
+.message-text {
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+
+/*phone adaptive*/
+
+@media (max-width: 768px) {
+  .chat-container,
+  main > div {
+    width: 95%;
+    max-width: 100%;
+    padding: 8px;
+  }
+
+  .message-text markdown th,
+  .message-text markdown td {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
 }

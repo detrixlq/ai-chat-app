@@ -34,7 +34,7 @@
           <span class="time">{{ message.timestamp | date:'shortTime' }}</span>
         </div>
         <div class="message-text">
-          {{ message.text }}
+          <markdown [data]="message.text"></markdown>
         </div>
       </div>
 
@@ -56,3 +56,4 @@
     </div>
   </div>
 </div>
+

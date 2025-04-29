@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
 
 interface Message {
   text: string;
@@ -22,11 +23,12 @@ interface Chat {
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, MarkdownModule],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements AfterViewChecked, OnInit {
+  markdownText: string = '# Hello from Markdown\n\n**Bold text**, _italic_, and `code`.';
   inputText = '';
   username = 'You'; // Initialize with fallback
   isTyping = false;
